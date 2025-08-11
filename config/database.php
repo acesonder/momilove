@@ -1,31 +1,24 @@
 <?php
-// Database configuration
-$db_host = 'localhost';
-$db_name = 'momilove_db';
-$db_user = 'root';
-$db_pass = '';
+// Database configuration - Using SQLite for demo purposes
+$db_path = __DIR__ . '/../data/momilove.db';
+
+// Create data directory if it doesn't exist
+$data_dir = dirname($db_path);
+if (!file_exists($data_dir)) {
+    mkdir($data_dir, 0755, true);
+}
 
 try {
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
+    $pdo = new PDO("sqlite:$db_path");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    
+    // Initialize database if needed
+    include_once __DIR__ . '/../sql/init_database.php';
+    initDatabase($pdo);
+    
 } catch (PDOException $e) {
-    // For development/demo purposes, we'll create the database and tables if they don't exist
-    try {
-        $pdo = new PDO("mysql:host=$db_host;charset=utf8mb4", $db_user, $db_pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        // Create database
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS $db_name");
-        $pdo->exec("USE $db_name");
-        
-        // Create tables
-        include_once __DIR__ . '/../sql/init_database.php';
-        initDatabase($pdo);
-        
-    } catch (PDOException $e2) {
-        die("Database connection failed: " . $e2->getMessage());
-    }
+    die("Database connection failed: " . $e->getMessage());
 }
 
 // Helper functions

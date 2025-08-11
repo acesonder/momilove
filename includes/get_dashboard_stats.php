@@ -6,9 +6,9 @@ try {
     
     // Next appointment
     $stmt = $pdo->query("
-        SELECT DATE_FORMAT(appointment_date, '%b %d') as next_appointment
+        SELECT strftime('%m/%d', appointment_date) as next_appointment
         FROM appointments 
-        WHERE appointment_date >= CURDATE() 
+        WHERE appointment_date >= date('now') 
         ORDER BY appointment_date ASC, appointment_time ASC 
         LIMIT 1
     ");
@@ -18,7 +18,7 @@ try {
     $stmt = $pdo->query("
         SELECT AVG(mood) as avg_mood 
         FROM daily_entries 
-        WHERE date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        WHERE date >= date('now', '-7 days')
     ");
     $stats['avg_mood'] = round($stmt->fetchColumn());
     

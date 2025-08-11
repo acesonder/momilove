@@ -13,7 +13,7 @@ try {
     $stmt = $pdo->query("
         SELECT AVG(energy) as avg_energy 
         FROM daily_entries 
-        WHERE date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        WHERE date >= date('now', '-30 days')
     ");
     $analytics['avg_energy'] = $stmt->fetchColumn();
     

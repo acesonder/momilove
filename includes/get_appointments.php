@@ -5,7 +5,7 @@ try {
     $stmt = $pdo->prepare("
         SELECT appointment_date, appointment_time, doctor, appointment_type, notes, status 
         FROM appointments 
-        WHERE appointment_date >= CURDATE()
+        WHERE appointment_date >= date('now')
         ORDER BY appointment_date ASC, appointment_time ASC 
         LIMIT 10
     ");

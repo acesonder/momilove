@@ -216,10 +216,10 @@ input:focus, select:focus, textarea:focus{ border-color: rgba(108,92,231,.55); b
 
 /* Panel switching */
 .card[role="tabpanel"] {
-  display: none;
+  display: none !important;
 }
 .card[role="tabpanel"].active-panel {
-  display: block;
+  display: block !important;
 }
 
 /* Resource cards */

@@ -3,64 +3,64 @@ function initDatabase($pdo) {
     // Daily tracker table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS daily_entries (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             date DATE NOT NULL UNIQUE,
-            mood TINYINT NOT NULL DEFAULT 3,
-            energy TINYINT NOT NULL DEFAULT 5,
-            pain TINYINT NOT NULL DEFAULT 0,
+            mood INTEGER NOT NULL DEFAULT 3,
+            energy INTEGER NOT NULL DEFAULT 5,
+            pain INTEGER NOT NULL DEFAULT 0,
             notes TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ");
     
     // Boat trips table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS boat_trips (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             trip_date DATE NOT NULL,
-            location VARCHAR(255) NOT NULL,
-            duration DECIMAL(3,1) NOT NULL,
-            weather VARCHAR(50),
+            location TEXT NOT NULL,
+            duration REAL NOT NULL,
+            weather TEXT,
             companions TEXT,
-            activity VARCHAR(50),
-            enjoyment TINYINT DEFAULT 3,
-            rating TINYINT NOT NULL DEFAULT 3,
+            activity TEXT,
+            enjoyment INTEGER DEFAULT 3,
+            rating INTEGER NOT NULL DEFAULT 3,
             notes TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ");
     
     // Appointments table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS appointments (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             appointment_date DATE NOT NULL,
             appointment_time TIME NOT NULL,
-            doctor VARCHAR(255) NOT NULL,
-            appointment_type VARCHAR(100) NOT NULL,
+            doctor TEXT NOT NULL,
+            appointment_type TEXT NOT NULL,
             notes TEXT,
-            status ENUM('scheduled', 'completed', 'cancelled') DEFAULT 'scheduled',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            status TEXT DEFAULT 'scheduled',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ");
     
     // Resources table (pre-populated with Milford, SK resources)
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS resources (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            category VARCHAR(100) NOT NULL,
-            name VARCHAR(255) NOT NULL,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            name TEXT NOT NULL,
             address TEXT,
-            phone VARCHAR(20),
+            phone TEXT,
             description TEXT,
-            website VARCHAR(255),
+            website TEXT,
             hours TEXT,
-            icon VARCHAR(10) DEFAULT '📍',
-            sort_order INT DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            icon TEXT DEFAULT '📍',
+            sort_order INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ");
     

@@ -31,14 +31,8 @@ try {
     
     // Insert or update entry
     $stmt = $pdo->prepare("
-        INSERT INTO daily_entries (date, mood, energy, pain, notes) 
+        INSERT OR REPLACE INTO daily_entries (date, mood, energy, pain, notes) 
         VALUES (?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE 
-        mood = VALUES(mood), 
-        energy = VALUES(energy), 
-        pain = VALUES(pain), 
-        notes = VALUES(notes),
-        updated_at = CURRENT_TIMESTAMP
     ");
     
     $stmt->execute([$date, $mood, $energy, $pain, $notes]);
